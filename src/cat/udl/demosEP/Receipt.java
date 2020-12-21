@@ -7,6 +7,7 @@ import cat.udl.demosEP.interfaces.ReceiptPrinter;
 import cat.udl.demosEP.mocks.StubProductDB;
 
 import java.math.BigDecimal;
+import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -53,7 +54,7 @@ class Receipt {
             throw new IsClosedException ("Recibo ya cerrado");
         else {
             BigDecimal cent = new BigDecimal("100");
-            taxes = total.multiply(percent).divide(cent);
+            taxes = total.multiply(percent).divide(cent,2, RoundingMode.CEILING);
             total = total.add(taxes);
             isClosed = true;
         }
