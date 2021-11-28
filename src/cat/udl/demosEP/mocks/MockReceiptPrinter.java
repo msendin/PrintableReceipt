@@ -6,7 +6,11 @@ import java.math.BigDecimal;
 
 public class MockReceiptPrinter implements ReceiptPrinter {
 
-    String output = "";
+    String output;
+
+    public MockReceiptPrinter() {
+        output = "";
+    }
 
     @Override
     public void init() {
@@ -16,14 +20,14 @@ public class MockReceiptPrinter implements ReceiptPrinter {
 
     @Override
     public void addProduct(String description, int quantity, BigDecimal price) {
-        output += description + "\t" + quantity + "\t" + price.toString() + "\n";
-        System.out.println(description + "\t" + quantity + "\t" + price.toString());
+        output += description + "\t" + quantity + "\t" + price + "\n";
+        System.out.println(description + "\t" + quantity + "\t" + price);
     }
 
     @Override
     public void addTaxes(BigDecimal taxes) {
-        output += "TAXAS" + "\t" + taxes.toString() + "\n";
-        System.out.println("TAXAS" + "\t" + taxes.toString());
+        output += "TAXES" + "\t" + taxes + "\n";
+        System.out.println("TAXES" + "\t" + taxes);
     }
 
     @Override
@@ -34,6 +38,7 @@ public class MockReceiptPrinter implements ReceiptPrinter {
         System.out.println("TOTAL" + "\t" + total);
     }
 
+    @Override
     public String getOutput() {
         return output;
     }

@@ -2,6 +2,7 @@ package cat.udl.demosEP;
 
 import cat.udl.demosEP.exceptions.DoesNotExistException;
 import cat.udl.demosEP.exceptions.IsClosedException;
+import cat.udl.demosEP.exceptions.IsNotClosedException;
 import cat.udl.demosEP.interfaces.ProductDB;
 import cat.udl.demosEP.interfaces.ReceiptInterfaceTest;
 import cat.udl.demosEP.interfaces.ReceiptPrinter;
@@ -18,9 +19,9 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceTest {
 
-    Receipt receipt;
-    ProductDB prodDB;
-    ReceiptPrinter rP;
+    private Receipt receipt;
+    private ProductDB prodDB;
+    private ReceiptPrinter rP;
 
     @BeforeEach
     void setUp() {
@@ -44,8 +45,8 @@ class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceT
     public void addTaxesTest() throws IsClosedException {
         BigDecimal perc = new BigDecimal("15");
         receipt.addTaxes(perc);
-        assertEquals(new BigDecimal("0"),receipt.getTaxes());
-        assertEquals(new BigDecimal("0"),receipt.getTotal());
+        assertEquals(new BigDecimal("0.00"),receipt.getTaxes());
+        assertEquals(new BigDecimal("0.00"),receipt.getTotal());
     }
 
     @Override
@@ -72,7 +73,23 @@ class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceT
 
     @Override
     @Test
-    public void printReceiptTest() throws IsClosedException, DoesNotExistException {
+    public void printReceiptTest() throws IsClosedException, DoesNotExistException, IsNotClosedException {
+        String expO;
+        BigDecimal perc = new BigDecimal("15");
+
+        receipt.addTaxes(perc);
+        receipt.printReceipt();
+        expO = "Acme S.A.";
+        expO += "\nTAXES\t" + receipt.getTaxes();
+        expO += "\n-------------------------\n";
+        expO += "TOTAL" + "\t" + receipt.getTotal();
+
+        assertEquals(expO,rP.getOutput());
+    }
+
+    @Override
+    @Test
+    public void printPlusReceiptTest() throws IsClosedException, DoesNotExistException, IsNotClosedException {
         String expO;
         String pID = "CARD";
         receipt.addLine(pID,10);
@@ -81,11 +98,18 @@ class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceT
 
         receipt.printReceipt();
         expO = "Acme S.A.\n";
-        expO += prodDB.getProduct("CARD").getDescription() + "\t" + 10 + "\t" + new BigDecimal("75").toString();
-        expO += "\nTAXAS\t" + receipt.getTaxes();
+        expO += prodDB.getProduct("CARD").getDescription() + "\t" + 10 + "\t" + prodDB.getProduct("CARD").getPrice();
+        expO += "\nTAXES\t" + receipt.getTaxes();
         expO += "\n-------------------------\n";
         expO += "TOTAL" + "\t" + receipt.getTotal();
 
         assertEquals(expO,rP.getOutput());
+    }
+
+    @Override
+    @Test
+    public void getIsNotClosedExceptionTest() {
+        assertThrows(IsNotClosedException.class,
+                () -> receipt.printReceipt());
     }
 }

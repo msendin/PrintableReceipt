@@ -4,9 +4,9 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
 
-    String productID;
-    String description;
-    BigDecimal price;
+    private String productID;
+    private String description;
+    private BigDecimal price;
 
 
 

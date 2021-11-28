@@ -2,6 +2,7 @@ package cat.udl.demosEP;
 
 import cat.udl.demosEP.exceptions.DoesNotExistException;
 import cat.udl.demosEP.exceptions.IsClosedException;
+import cat.udl.demosEP.exceptions.IsNotClosedException;
 import cat.udl.demosEP.interfaces.ProductDB;
 import cat.udl.demosEP.interfaces.ReceiptPrinter;
 import cat.udl.demosEP.mocks.StubProductDB;
@@ -24,6 +25,7 @@ class Receipt {
     Receipt() {
         listOfProducts = new ArrayList<>();
         total = new BigDecimal("0");
+        taxes = new BigDecimal("0");
         isClosed = false;
     }
 
@@ -42,7 +44,7 @@ class Receipt {
         if (isClosed)
             throw new IsClosedException ("Recibo ya cerrado");
         else {
-            price = prodDB.getPrice(productID);
+            price = prodDB.getProduct(productID).getPrice();
             rcline = new ReceiptLine(productID, numUnits);
             listOfProducts.add(rcline);
             total = total.add(price.multiply(BigDecimal.valueOf(rcline.getNumUnits())));
@@ -65,18 +67,20 @@ class Receipt {
     }
 
 
-    BigDecimal getTaxes() {
-        return taxes;
-    }
+    BigDecimal getTaxes() {         return taxes;     }
+
+    boolean Isclosed() { return isClosed; }
 
 
-    void printReceipt() throws DoesNotExistException {
+    void printReceipt() throws DoesNotExistException, IsNotClosedException {
         String pID;
 
+        if (!isClosed)
+            throw new IsNotClosedException("Recibo aun no cerrado");
         printer.init();
         for (ReceiptLine product : listOfProducts) {
             pID = product.getProductID();
-            printer.addProduct(prodDB.getProduct(pID).getDescription(), product.getNumUnits(), prodDB.getPrice(pID));
+            printer.addProduct(prodDB.getProduct(pID).getDescription(), product.getNumUnits(), prodDB.getProduct(pID).getPrice());
         }
         printer.addTaxes(taxes);
         printer.print(total);
