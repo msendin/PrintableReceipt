@@ -37,7 +37,7 @@ class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceT
     public void addLineTest() throws IsClosedException, DoesNotExistException {
         String pID = "KEYBOARD";
         receipt.addLine(pID,10);
-        assertEquals(new BigDecimal("1500"),receipt.getTotal());
+        assertEquals(new BigDecimal("1500.00"),receipt.getTotal());
     }
 
     @Override
