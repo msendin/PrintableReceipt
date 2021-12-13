@@ -16,8 +16,6 @@ public class ProductDTO {
         price = pr;
     }
 
-
-
     String getDescription() {return description;}
     BigDecimal getPrice() {return price;}
 

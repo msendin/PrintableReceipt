@@ -74,13 +74,15 @@ class Receipt {
 
     void printReceipt() throws DoesNotExistException, IsNotClosedException {
         String pID;
+        ProductDTO prod;
 
         if (!isClosed)
             throw new IsNotClosedException("Recibo aun no cerrado");
         printer.init();
         for (ReceiptLine product : listOfProducts) {
             pID = product.getProductID();
-            printer.addProduct(prodDB.getProduct(pID).getDescription(), product.getNumUnits(), prodDB.getProduct(pID).getPrice());
+            prod = prodDB.getProduct(pID);
+            printer.addProduct(prod.getDescription(), product.getNumUnits(), prod.getPrice());
         }
         printer.addTaxes(taxes);
         printer.print(total);

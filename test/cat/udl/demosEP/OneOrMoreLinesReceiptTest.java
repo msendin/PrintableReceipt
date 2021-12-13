@@ -66,7 +66,6 @@ class OneOrMoreLinesReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterI
                     receipt.addTaxes(perc);
                     String pID = "CARD";
                     receipt.addLine(pID, 10);
-                    //receipt.addTaxes(perc);
                 });
     }
 
