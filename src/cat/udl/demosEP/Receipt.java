@@ -5,7 +5,6 @@ import cat.udl.demosEP.exceptions.IsClosedException;
 import cat.udl.demosEP.exceptions.IsNotClosedException;
 import cat.udl.demosEP.interfaces.ProductDB;
 import cat.udl.demosEP.interfaces.ReceiptPrinter;
-import cat.udl.demosEP.mocks.StubProductDB;
 
 import java.math.BigDecimal;
 import java.math.RoundingMode;
@@ -68,8 +67,6 @@ public class Receipt {
 
 
     BigDecimal getTaxes() {  return taxes;  }
-
-    boolean Isclosed() { return isClosed; }
 
 
     void printReceipt() throws DoesNotExistException, IsNotClosedException {
