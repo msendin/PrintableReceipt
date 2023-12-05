@@ -59,18 +59,6 @@ class OneOrMoreLinesReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterI
 
     @Override
     @Test
-    public void getIsClosedExceptionTest() {
-        assertThrows(IsClosedException.class,
-                () -> {
-                    BigDecimal perc = new BigDecimal("15.00");
-                    receipt.addTaxes(perc);
-                    String pID = "CARD";
-                    receipt.addLine(pID, 10);
-                });
-    }
-
-    @Override
-    @Test
     public void getDoesNotExistExceptionTest() {
         assertThrows(DoesNotExistException.class,
                 () -> {

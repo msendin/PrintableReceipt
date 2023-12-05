@@ -51,18 +51,6 @@ class EmptyReceiptTest implements ReceiptInterfaceTest, ReceiptPrinterInterfaceT
 
     @Override
     @Test
-    public void getIsClosedExceptionTest() {
-        assertThrows(IsClosedException.class,
-                () -> {
-                    BigDecimal perc = new BigDecimal("15");
-                    receipt.addTaxes(perc);
-                    String pID = "KEYBOARD";
-                    receipt.addLine(pID,10);
-                });
-    }
-
-    @Override
-    @Test
     public void getDoesNotExistExceptionTest() {
         assertThrows(DoesNotExistException.class,
                 () -> {

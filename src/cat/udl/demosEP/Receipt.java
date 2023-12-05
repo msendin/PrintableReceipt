@@ -12,7 +12,7 @@ import java.math.RoundingMode;
 import java.util.ArrayList;
 import java.util.List;
 
-class Receipt {
+public class Receipt {
 
     private final List<ReceiptLine> listOfProducts;
     private BigDecimal total;
@@ -22,7 +22,7 @@ class Receipt {
     private ProductDB prodDB;
     private ReceiptPrinter printer;
 
-    Receipt() {
+    public Receipt() {
         listOfProducts = new ArrayList<>();
         total = new BigDecimal("0.00");
         taxes = new BigDecimal("0.00");
@@ -67,7 +67,7 @@ class Receipt {
     }
 
 
-    BigDecimal getTaxes() {         return taxes;     }
+    BigDecimal getTaxes() {  return taxes;  }
 
     boolean Isclosed() { return isClosed; }
 
