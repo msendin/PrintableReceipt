@@ -4,7 +4,7 @@ import java.math.BigDecimal;
 
 public class ProductDTO {
 
-    private String productID;
+    private final String productID;
     private String description;
     private BigDecimal price;
 
@@ -16,6 +16,7 @@ public class ProductDTO {
         price = pr;
     }
 
+    String getProductID() {return productID;}
     String getDescription() {return description;}
     BigDecimal getPrice() {return price;}
 
