@@ -1,8 +1,8 @@
 package cat.udl.demosEP;
 
 class ReceiptLine {
-    private int numUnits;
-    private String productID;
+    private final int numUnits;
+    private final String productID;
 
     ReceiptLine (String productID, int num) {
         this.productID = productID;
