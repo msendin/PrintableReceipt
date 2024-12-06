@@ -11,7 +11,6 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public interface ReceiptInterfaceTest {
 
-    Receipt receipt = new Receipt();
     @Test
     void addLineTest() throws IsClosedException, DoesNotExistException;
 
@@ -20,6 +19,7 @@ public interface ReceiptInterfaceTest {
 
     @Test
     default void getIsClosedExceptionTest() {
+        Receipt receipt = new Receipt();
         BigDecimal perc = new BigDecimal("15.00");
         String pID = "KEYBOARD";
         assertThrows(IsClosedException.class,
